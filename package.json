@@ -1,0 +1,23 @@
+{
+  "name": "fleetdash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "server": "npm run dev --prefix backend",
+    "client": "npm run dev --prefix frontend",
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"blue,green\" \"npm run server\" \"npm run client\"",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "concurrently": "^10.0.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
