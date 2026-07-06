@@ -74,7 +74,7 @@ Ensure you have the following installed on your machine:
 ### 2. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/AnasMalek12/FleetDash.git
 cd FleetDash
 ```
 
