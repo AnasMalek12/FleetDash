@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import healthRoutes from "./routes/health.routes.js";
+import jobsRoutes from "./routes/jobs.routes.js";
 
 dotenv.config();
 
@@ -19,5 +20,6 @@ app.get("/", (req, res) => {
 
 // API Routes
 app.use("/api/health", healthRoutes);
+app.use("/api/jobs", jobsRoutes);
 
 export default app;
