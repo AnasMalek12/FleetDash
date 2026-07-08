@@ -36,6 +36,9 @@ const FleetCanvas = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
+    let lastTime = performance.now();
+    let frameCount = 0;
+    let fps = 0;
 
     const resizeCanvas = () => {
       const { width, height } = container.getBoundingClientRect();
@@ -66,6 +69,18 @@ const FleetCanvas = () => {
         ctx.arc(vehicle.x, vehicle.y, 6, 0, Math.PI * 2);
         ctx.fill();
       }
+
+      frameCount++;
+      const now = performance.now();
+      if (now - lastTime >= 1000) {
+        fps = frameCount;
+        frameCount = 0;
+        lastTime = now;
+      }
+
+      ctx.fillStyle = '#565961';
+      ctx.font = '12px system-ui';
+      ctx.fillText(`${fps} FPS`, width - 60, 20);
 
       animationFrameId = requestAnimationFrame(draw);
     };
