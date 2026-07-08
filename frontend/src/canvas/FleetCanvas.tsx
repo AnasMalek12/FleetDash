@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
 interface FleetVehicle {
   id: number;
@@ -104,4 +104,4 @@ const FleetCanvas = () => {
   );
 };
 
-export default FleetCanvas;
+export default memo(FleetCanvas);
