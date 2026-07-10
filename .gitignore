@@ -47,6 +47,7 @@ temp/
 # MongoDB (if local dumps)
 # ======================
 dump/
+data/
 *.bak
 
 # ======================
