@@ -1,8 +1,12 @@
 import request from "supertest";
 import app from "../app.js";
-import { runWorker } from "../workers/workerRunner.js";
+import { runWorker, closeWorkerPools } from "../workers/workerRunner.js";
 
 describe("Worker Threads Baseline & Geofencing Route Tests", () => {
+  afterAll(async () => {
+    await closeWorkerPools();
+  });
+
   const mockGeofences = [
     {
       id: "zone-1",
@@ -55,6 +59,28 @@ describe("Worker Threads Baseline & Geofencing Route Tests", () => {
 
     it("should throw an error if worker payload is invalid", async () => {
       await expect(runWorker("geofence.worker.js", {})).rejects.toThrow();
+    });
+
+    it("should process multiple geofence checks sequentially or concurrently with high performance", async () => {
+      const startTime = Date.now();
+      const numRuns = 15;
+      const tasks = [];
+      for (let i = 0; i < numRuns; i++) {
+        tasks.push(
+          runWorker("geofence.worker.js", {
+            points: mockPoints,
+            geofences: mockGeofences,
+          })
+        );
+      }
+      const allResults = await Promise.all(tasks);
+      const duration = Date.now() - startTime;
+      console.log(`[Performance] Executed ${numRuns} geofencing tasks in parallel in ${duration}ms using Worker Pool`);
+
+      expect(allResults).toHaveLength(numRuns);
+      for (const results of allResults) {
+        expect(results).toHaveLength(2);
+      }
     });
   });
 
