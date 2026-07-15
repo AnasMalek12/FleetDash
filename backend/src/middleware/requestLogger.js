@@ -2,6 +2,10 @@
  * Express middleware to log incoming HTTP requests and response performance metrics.
  */
 const requestLogger = (req, res, next) => {
+  if (process.env.BYPASS_LOGGER === "true") {
+    return next();
+  }
+
   const start = Date.now();
   const { method, originalUrl } = req;
 

@@ -50,7 +50,7 @@ export async function getVehicles(req, res, next) {
     if (status) filter.status = status;
     if (type) filter.type = type;
 
-    const vehicles = await Vehicle.find(filter);
+    const vehicles = await Vehicle.find(filter).lean();
 
     return res.status(200).json({
       success: true,
@@ -69,7 +69,7 @@ export async function getVehicleById(req, res, next) {
   try {
     const { id } = req.params;
 
-    const vehicle = await Vehicle.findById(id);
+    const vehicle = await Vehicle.findById(id).lean();
     if (!vehicle) {
       return res.status(404).json({
         success: false,
