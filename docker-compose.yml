@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: fleetdash-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  redis-cluster:
+    image: grokzen/redis-cluster:7.0.0
+    container_name: fleetdash-redis-cluster
+    ports:
+      - "7000:7000"
+      - "7001:7001"
+      - "7002:7002"
+      - "7003:7003"
+      - "7004:7004"
+      - "7005:7005"
+    environment:
+      - IP=127.0.0.1
+      - MASTERS=3
+      - SLAVES=1
+      - START_PORT=7000
+
+volumes:
+  mongodb_data:
